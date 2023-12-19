@@ -1,5 +1,4 @@
 .cart {
-  position: fixed;
   max-width: 30rem;
   background-color: #313131;
   color: white;
@@ -21,11 +20,11 @@
   z-index: 100;
   position: absolute;
   top: -280px;
-  left: calc(50% - 180px);
+  left: calc(50% - 245px);
 }
 
 .show {
-  top: calc(50% - 140px);
+  top: calc(50% - 325px);
 }
 
 @media screen and (max-width: 450px) {

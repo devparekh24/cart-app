@@ -9,6 +9,7 @@ const Cart = (props) => {
 
   const dispatch = useDispatch()
   const isToggle = useSelector(state => state.ui.isToggle)
+  const cartItem = useSelector(state => state.cart.items)
 
   useEffect(() => {
     document.body.classList.toggle('cart-open', isToggle);
@@ -27,10 +28,13 @@ const Cart = (props) => {
       <div className={`${classes.confirm} ${isToggle ? classes.show : ''}`}>
         <Card className={classes.cart}>
           <h2>Your Shopping Cart</h2>
-          <ul>
-            <CartItem
-              item={{ title: 'Test Item', quantity: 3, total: 18, price: 6 }}
-            />
+          <ul>{
+            cartItem.map(item => (
+              <CartItem
+                key={item.id}
+                item={{ title: item.name, quantity: item.quantity, total: item.totalPrice, price: item.price, id: item.id }}
+              />))
+          }
           </ul>
           <button onClick={overlayClickHandler}>Okay</button>
         </Card>
