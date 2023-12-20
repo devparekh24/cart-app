@@ -3,12 +3,21 @@ import { createSlice } from '@reduxjs/toolkit'
 const uiSlice = createSlice({
     name: 'ui',
     initialState: {
-        isToggle: false
+        isToggle: false,
+        notification: null
     },
     reducers: {
         toggleShoppingCart(state, action) {
             state.isToggle = !state.isToggle
+        },
+        showNotification(state, action) {
+            state.notification = {
+                status: action.payload.status,
+                title: action.payload.title,
+                message: action.payload.message
+            }
         }
+
     }
 })
 
