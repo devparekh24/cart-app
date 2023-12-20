@@ -26,7 +26,10 @@ function App() {
       }
       const resData = await res.json()
 
-      dispatch(cartActions.replaceCart(resData))
+      dispatch(cartActions.replaceCart({
+        items: resData.items || [],
+        totalQuantity: resData.totalQuantity
+      }))
     }
 
     fetchData().catch((err) => {
@@ -37,7 +40,7 @@ function App() {
       }))
     })
   }, [dispatch])
-  
+
   useEffect(() => {
 
     const sentCartData = async () => {
@@ -50,7 +53,10 @@ function App() {
 
       const res = await fetch('https://redux-cart-app-25cba-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json', {
         method: 'PUT',
-        body: JSON.stringify(cart)
+        body: JSON.stringify({
+          items: cart.items,
+          totalQuantity: cart.totalQuantity
+        })
       })
 
       if (!res.ok) {
@@ -60,7 +66,7 @@ function App() {
       dispatch(uiActions.showNotification({
         status: 'success',
         title: 'Success!',
-        message: 'Item added Successfully...!'
+        message: 'Cart updated Successfully...!'
       }))
     }
 
@@ -69,13 +75,15 @@ function App() {
       return
     }
 
-    sentCartData().catch((err) => {
-      dispatch(uiActions.showNotification({
-        status: 'error',
-        title: 'Error!',
-        message: 'Something went wrong!'
-      }))
-    })
+    if (cart.changed) {
+      sentCartData().catch((err) => {
+        dispatch(uiActions.showNotification({
+          status: 'error',
+          title: 'Error!',
+          message: 'Something went wrong!'
+        }))
+      })
+    }
 
     setTimeout(() => {
       dispatch(uiActions.hideNotification())
