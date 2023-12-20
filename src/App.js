@@ -5,6 +5,7 @@ import Products from './components/Shop/Products';
 import { useSelector, useDispatch } from 'react-redux'
 import { uiActions } from './slices/uiSlice/ui-slice';
 import Notification from './components/UI/Notification/Notification'
+import { cartActions } from './slices/cartSlice/cart-slice';
 
 let isInitial = true
 
@@ -15,6 +16,28 @@ function App() {
   const cart = useSelector(state => state.cart)
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const res = await fetch('https://redux-cart-app-25cba-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json')
+
+      if (!res.ok) {
+        throw new Error('Data fetching failed!')
+      }
+      const resData = await res.json()
+
+      dispatch(cartActions.replaceCart(resData))
+    }
+
+    fetchData().catch((err) => {
+      dispatch(uiActions.showNotification({
+        status: 'error',
+        title: 'Error!',
+        message: 'Something went wrong at data fetching!'
+      }))
+    })
+  }, [dispatch])
+  
   useEffect(() => {
 
     const sentCartData = async () => {
@@ -57,6 +80,7 @@ function App() {
     setTimeout(() => {
       dispatch(uiActions.hideNotification())
     }, 1500)
+
   }, [cart, dispatch])
 
   return (
