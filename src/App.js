@@ -54,6 +54,9 @@ function App() {
       }))
     })
 
+    setTimeout(() => {
+      dispatch(uiActions.hideNotification())
+    }, 1500)
   }, [cart, dispatch])
 
   return (
