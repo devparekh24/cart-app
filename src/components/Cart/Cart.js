@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Card from '../UI/Card';
+import Card from '../UI/Card/Card';
 import classes from './Cart.module.css';
 import CartItem from './CartItem';
 import { useSelector, useDispatch } from 'react-redux'
