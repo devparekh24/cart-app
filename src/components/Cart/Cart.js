@@ -10,6 +10,7 @@ const Cart = (props) => {
   const dispatch = useDispatch()
   const isToggle = useSelector(state => state.ui.isToggle)
   const cartItem = useSelector(state => state.cart.items)
+  const totalAmount = useSelector(state => state.cart.totalAmount)
 
   useEffect(() => {
     document.body.classList.toggle('cart-open', isToggle);
@@ -36,7 +37,11 @@ const Cart = (props) => {
               />))
           }
           </ul>
-          <button onClick={overlayClickHandler}>Okay</button>
+          <span style={{ display: "flex", justifyContent: 'space-evenly' }}>
+            <h3>Total Amount :</h3>
+            <h3>${totalAmount}</h3>
+            <button onClick={overlayClickHandler}>Okay</button>
+          </span>
         </Card>
       </div>
     </>

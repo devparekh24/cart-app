@@ -28,7 +28,8 @@ function App() {
 
       dispatch(cartActions.replaceCart({
         items: resData.items || [],
-        totalQuantity: resData.totalQuantity
+        totalQuantity: resData.totalQuantity,
+        totalAmount: resData.totalAmount || 0
       }))
     }
 
@@ -55,7 +56,8 @@ function App() {
         method: 'PUT',
         body: JSON.stringify({
           items: cart.items,
-          totalQuantity: cart.totalQuantity
+          totalQuantity: cart.totalQuantity,
+          totalAmount: cart.totalAmount
         })
       })
 
